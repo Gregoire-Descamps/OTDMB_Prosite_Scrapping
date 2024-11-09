@@ -1,7 +1,4 @@
-# This is a sample Python script.
-
-# Press Maj+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-
-
+#allow to install automatically required pakages at startup
+import subprocess, sys
+subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"])
 
