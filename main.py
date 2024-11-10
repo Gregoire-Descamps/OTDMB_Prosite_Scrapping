@@ -1,16 +1,19 @@
 #allow to install automatically required pakages at startup
 import subprocess, sys
 try :
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"])
+    subprocess.run([sys.executable, "-m", "pip", "install", "-r", "requirements.txt"], shell=False)
 except :
+    print("Could not install the requirements, please verify your pip installation\nIf you use wsl, it's recommended to create a virtual environment")
+    raise
 
-
-    subprocess.Popen(["sudo", "apt", "install", "python3-venv"], shell=True)
-    subprocess.check_call(["wsl.exe", "source", "env/bin/activate"], shell=False)
-    subprocess.check_call(["-m", "pip", "install", "-r", "requirements.txt"], shell=False)
+# check if MySQL is installed
+try :
+    subprocess.call(["mysql", "--version"],stdout=subprocess.DEVNULL)
+except:
+    print("MySQL is not installed, please install and configure it before running this script")
+    exit()
 
 
 import MySQL
 
-MySQL.CreateEngine("MySQL://localhost/PrositeLocalDB")
-
+DBConn = MySQL.DBConnection()

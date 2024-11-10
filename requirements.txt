@@ -1,3 +1,5 @@
 beautifulsoup4
 sqlalchemy
 sqlalchemy_utils
+pymysql
+cryptography
