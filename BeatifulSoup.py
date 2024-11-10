@@ -1,26 +1,16 @@
 import requests
 from bs4 import BeautifulSoup
 
-#links
+#Prosite link part
 prosite_url = "https://prosite.expasy.org/cgi-bin/prosite/prosite_browse.cgi?order=hits%20desc&type=all"
-desc_url = "https://prosite.expasy.org/accession_number"
 
-#Requests part
 prosite_response = requests.get(prosite_url)
 if prosite_response:
     print("Prosite URL response successful")
 else:
     raise Exception(f"Prosite URL Error; status code : {prosite_response.status_code}")
 
-desc_response = requests.get(desc_url)
-if desc_response:
-    print("Description URL successful")
-else:
-    raise Exception(f"Description URL Error; status code: {desc_response.status_code}")
-
-#Web Scrapping part
 prosite_soup = BeautifulSoup(prosite_response.text, "html.parser")
-desc_soup = BeautifulSoup(desc_response.text, "html.parser")
 
 rows = prosite_soup.find_all('tr')
 
@@ -30,6 +20,17 @@ for row in rows:
     ac = cols[0].text.strip()
     id = cols[1].text.strip()
     entry_type = cols[2].text.strip()
+
+#Description link part (with ac number)
+desc_url = f"https://prosite.expasy.org/{ac}"
+
+desc_response = requests.get(desc_url)
+if desc_response:
+    print("Description URL successful")
+else:
+    raise Exception(f"Description URL Error; status code: {desc_response.status_code}")
+
+desc_soup = BeautifulSoup(desc_response.text, "html.parser")
 
 desc = desc_soup.find('div', {'class': 'description-class'})
 desc_text = ""
@@ -46,4 +47,5 @@ data.append({
     'description': desc_text
 })
 
-print(data)
+for entry in data:
+    print(entry)
