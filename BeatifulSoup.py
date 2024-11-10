@@ -20,32 +20,30 @@ for row in rows:
     ac = cols[0].text.strip()
     id = cols[1].text.strip()
     entry_type = cols[2].text.strip()
+    desc_url = f"https://prosite.expasy.org/{ac}"
 
-#Description link part (with ac number)
-desc_url = f"https://prosite.expasy.org/{ac}"
+    desc_response = requests.get(desc_url)
+    if desc_response:
+        print("Description URL successful")
+    else:
+        raise Exception(f"Description URL Error; status code: {desc_response.status_code}")
 
-desc_response = requests.get(desc_url)
-if desc_response:
-    print("Description URL successful")
-else:
-    raise Exception(f"Description URL Error; status code: {desc_response.status_code}")
+    desc_soup = BeautifulSoup(desc_response.text, "html.parser")
 
-desc_soup = BeautifulSoup(desc_response.text, "html.parser")
+    desc = desc_soup.find('div', {'class': 'description-class'})
+    desc_text = ""
 
-desc = desc_soup.find('div', {'class': 'description-class'})
-desc_text = ""
+    if desc:
+        desc_text = desc.text.strip()
+    else:
+        desc_text = "none"
 
-if desc:
-    desc_text = desc.text.strip()
-else:
-    desc_text = "none"
-
-data.append({
-    'AC': ac,
-    'ID': id,
-    'entry_type': entry_type,
-    'description': desc_text
-})
+    data.append({
+        'AC': ac,
+        'ID': id,
+        'entry_type': entry_type,
+        'description': desc_text
+    })
 
 for entry in data:
     print(entry)
