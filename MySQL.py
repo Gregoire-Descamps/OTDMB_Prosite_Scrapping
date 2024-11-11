@@ -22,11 +22,8 @@ class Entry(PrositeBase):
 class Description(PrositeBase):
     __tablename__ = "Description"
 
-    Doc_ac : Mapped[str] = mapped_column(String(9), primary_key=True)
+    Accession_Num: Mapped[str] = mapped_column(String(7), ForeignKey(Entry.Accession_Num), primary_key=True)
     description: Mapped[str] = mapped_column(String(10000))
-    last_update_date : Mapped[str] = mapped_column(String(14))
-    last_update_type: Mapped[str] = mapped_column(String(50))
-    Entry : Mapped[list["Entry"]] = relationship(back_populates="description")
 
 
 
@@ -38,12 +35,13 @@ class DBConnection:
     def __init__(self):
         self._username = input("Enter your DataBase User Name: ")
         print(f"Let's connect {self._username}!\n(If you're on IDE and the code stop running from here, make sure you enabled terminal emulation!")
+        self.__psw = getpass.getpass(prompt=f"Enter database password for user {self._username} :")
         self.engine = self.CreateEngine()
 
 
     # get the URL of the database (for security purposes, shouldn't be used outside the class methods)
     def __URL__(self):
-        return f"mysql+pymysql://{self._username}:{getpass.getpass(prompt=f"Enter database password for user {self._username} :")}@localhost/PrositeLocalDB"
+        return f"mysql+pymysql://{self._username}:{self.__psw}@localhost/PrositeLocalDB"
 
 # Create the DB engine to connect to a DB
     def CreateEngine(self):
