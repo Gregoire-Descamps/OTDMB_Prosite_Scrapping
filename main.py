@@ -14,6 +14,6 @@ except:
     exit()
 
 
-import MySQL
+import ScrapPySQL
 
 DBConn = MySQL.DBConnection()
