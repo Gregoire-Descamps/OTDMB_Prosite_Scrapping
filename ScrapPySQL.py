@@ -83,7 +83,6 @@ class DBConnection:
         DBObjects = []
         with self.session() as session:
             for item in EntryList:
-                print(item["AC"])
                 DBObjects.append(Entry(Accession_Num = item['AC'], id= item['ID'], entry_type=item['entry_type'] , description = Description(description =item['description'])))
             session.add_all(DBObjects)
             session.commit()
