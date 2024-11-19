@@ -10,7 +10,7 @@ In order to work easily together on this project, a github repository has been s
 We decided to use modules for this project in order to make it clear and more organized. 
 It was also made with the user's comfort in mind, for instance:
 - installation of necessary resources are automated and can be easily modified by said-user.
-- the database is automatically generated and the user is prompted to register themselves (using the terminal) to access it.
+- the database is automatically generated and the user is prompted to register themselves (using secure terminal input) to access it.
 
 These modules include:
 
@@ -25,7 +25,8 @@ Scraps the content from the prosite website, and successfully retrieves the requ
 
 ### - A ScrapPySQL.py script
 
-Responsible for creating the mySQL database
+Responsible for creating the mySQL database, generating and managing the database connection and population.
+It's based on the [SQLAlchemy](https://www.sqlalchemy.org/) package and the ORM( Object Relationnal Mapper) approach.
 
 
 ### - A requirements.txt file
@@ -46,7 +47,8 @@ Every goal set here have been reached: we managed to make a project which can be
 While we cannot ensure for how long the beautifulsoup script will work, it was made to last as long as possible. 
 For instance, columns of the required fields are not retrieved using the index as we see it on the page, but by searching for the actual name of the field, and only then retrieving the index. 
 However, one of the main downside of this project is the time it takes to successfully retrieves all the required information as it can easily take between 5 and 10 minutes.
-On top of that, only one user can access the database at a time. So if two people were to scrap the pages at the same time using this database, one user would have to wait after the other to finish.
+On top of that, to reduce database transaction time, the scrapped data get loaded separately instead of creating the objects "on the fly". 
+This requires creating a data list and duplicate its content in the database objects. Here we made the choice of database performance over program and system memory.
 Aside from this downside, the project is suited for any user thanks to its clarity and its user-friendly interface.
 
 

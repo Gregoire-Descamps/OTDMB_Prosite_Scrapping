@@ -15,5 +15,12 @@ except:
 
 
 import ScrapPySQL
+from BeatifulSoup import PrositeScrapper
 
-DBConn = MySQL.DBConnection()
+
+# Prosite link
+prosite_url = "https://prosite.expasy.org/cgi-bin/prosite/prosite_browse.cgi?order=hits%20desc&type=all"
+
+DBConn = ScrapPySQL.DBConnection()
+
+DBConn.PrositeLoader(PrositeScrapper(prosite_url))
