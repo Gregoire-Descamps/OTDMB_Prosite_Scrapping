@@ -1,5 +1,5 @@
 # Prosite project
-    Hemery Maxence & Descamps Gregoire
+  Hemery Maxence & Descamps Gregoire
 ## Goals of the project
 
 The goal of the project is to scrap content from an online HTML page, and more specifically a grid containing information about prosite motifs.
