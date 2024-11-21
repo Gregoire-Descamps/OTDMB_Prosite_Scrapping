@@ -44,7 +44,7 @@ The user can install other APIs if needed by adding their name in this file, and
 Every goal set here have been reached: we managed to make a project which can be easily modified and understood by an user.
 
 
-## Discussion:
+### Discussion:
 
 While we cannot ensure for how long the beautifulsoup script will work, it was made to last as long as possible. 
 For instance, columns of the required fields are not retrieved using the index as we see it on the page, but by searching for the actual name of the field, and only then retrieving the index. 
